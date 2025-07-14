@@ -1,4 +1,4 @@
-FROM debian:bookworm
+FROM ubuntu:24.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -12,14 +12,23 @@ RUN \
        jq \
        yq \
        libgl1 \
+       libglib2.0-0 \
+       locales \
        make \
-       default-jre-headless \
+       openjdk-21-jre-headless \
        patch \
        python3 \
        python3-pip \
        python3-virtualenv \
        unzip \
        xz-utils
+
+RUN \
+    locale-gen en_US.UTF-8 \
+    && update-locale LANG=en_US.UTF-8
+
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
 
 RUN \
     virtualenv /opt/venv \
@@ -54,7 +63,8 @@ RUN \
 RUN \
     curl -o simplicity_sdk_2024.6.2.zip -L https://github.com/SiliconLabs/simplicity_sdk/releases/download/v2024.6.2/gecko-sdk.zip \
     && unzip -q -d simplicity_sdk_2024.6.2 simplicity_sdk_2024.6.2.zip \
-    && rm simplicity_sdk_2024.6.2.zip
+    && rm simplicity_sdk_2024.6.2.zip \
+    && chown ubuntu:ubuntu -R /simplicity_sdk_2024.6.2
 
 # Gecko SDK 4.4.6
 RUN \
@@ -70,13 +80,10 @@ RUN \
 
 ENV STUDIO_ADAPTER_PACK_PATH="/opt/zap"
 
-ARG USERNAME=builder
+ARG USERNAME=ubuntu
 ARG USER_UID=1000
 ARG USER_GID=1000
-
-# Create the user
-RUN groupadd --gid $USER_GID $USERNAME \
-    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
+RUN mkdir -p /build && chown $USERNAME:$USERNAME /build
 
 USER $USERNAME
 WORKDIR /build
