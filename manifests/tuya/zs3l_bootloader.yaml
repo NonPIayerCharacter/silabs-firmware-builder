@@ -1,5 +1,5 @@
 name: ZS3L Bootloader
-device: EFR32MG21A020F768IM32
+device: EFR32MG21A020F1024IM32
 base_project: src/bootloader
 filename: "{manifest_name}_{gecko_bootloader_version}"
 sdk: "simplicity_sdk:2025.6.0"
