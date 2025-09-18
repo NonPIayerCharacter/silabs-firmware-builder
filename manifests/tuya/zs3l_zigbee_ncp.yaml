@@ -1,5 +1,5 @@
 name: ZS3L Zigbee
-device: EFR32MG21A020F1024IM32
+device: MGM210L022JNF
 base_project: src/zigbee_ncp
 filename: "{manifest_name}_{ezsp_version}_{baudrate}"
 sdk: "simplicity_sdk:2025.6.0"
