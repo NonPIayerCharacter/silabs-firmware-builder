@@ -62,6 +62,7 @@ RUN \
     && rm simplicity_sdk_2025.6.2.zip \
     && chown ubuntu:ubuntu -R /simplicity_sdk_2025.6.2
 
+
 # ZCL Advanced Platform (ZAP) v2025.06.09
 RUN \
     curl -o zap_2025.06.09.zip -L https://github.com/project-chip/zap/releases/download/v2025.06.09/zap-linux-x64.zip \
